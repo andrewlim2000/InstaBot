@@ -1,17 +1,23 @@
 # imports
 from instapy import InstaPy
 from instapy import smart_run
+from time import sleep
 
 # login credentials
-insta_username = input("Enter username: ")
-insta_password = input("Enter password: ")
+bot_username = input("Bot username: ")
+bot_password = input("Bot password: ")
 
-# get an InstaPy session!
-# set headless_browser=True to run InstaPy in the background
-session = InstaPy(username=insta_username,
-                  password=insta_password,
-                  headless_browser=False)
+username = input("Desired username to check for unfollowers: ")
 
-with smart_run(session):
-  followers = session.grab_followers(username=insta_username, amount="full", live_match=True, store_locally=True)	
-  all_unfollowers, active_unfollowers = session.pick_unfollowers(username=insta_username, compare_by="latest", compare_track="first", live_match=True, store_locally=True, print_out=True)
+while True:
+  # get an InstaPy session!
+  # set headless_browser=True to run InstaPy in the background
+  session = InstaPy(username=bot_username,
+                    password=bot_password,
+                    headless_browser=False)
+
+  with smart_run(session):
+    followers = session.grab_followers(username=username, amount="full", live_match=True, store_locally=False)
+    print(followers)
+
+  sleep(30)
