@@ -1,13 +1,11 @@
 from selenium import webdriver
 from time import sleep
 
-PATH = 'C:\Program Files (x86)\chromedriver.exe'
-
 driver = None
 
 def sign_in(username, password):
     global driver
-    driver = webdriver.Chrome(PATH)
+    driver = webdriver.Chrome()
     driver.get('https://instagram.com')
     sleep(2)
     driver.find_element_by_name('username').send_keys(username)
