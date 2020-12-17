@@ -41,7 +41,8 @@ with smart_run(session):
       unfollowers.append(old_follower)
 
   # show unfollowers
-  print(unfollowers)
+  for unfollower in unfollowers:
+    print(unfollower)
 
   # update followers.txt
   os.remove(filename)
