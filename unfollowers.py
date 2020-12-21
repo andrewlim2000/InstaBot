@@ -34,15 +34,39 @@ with smart_run(session):
   # get new followers
   new_followers = session.grab_followers(username=username, amount="full", live_match=True, store_locally=False)
 
-  # compare old and new followers
-  unfollowers = []
+  # get following
+  following = session.grab_following(username=username, amount="full", live_match=True, store_locally=False)
+
+  # compare old and new followers to get all unfollowers
+  all_unfollowers = []
   for old_follower in old_followers:
     if old_follower not in new_followers:
-      unfollowers.append(old_follower)
+      all_unfollowers.append(old_follower)
 
-  # show unfollowers
-  for unfollower in unfollowers:
-    print(unfollower)
+  # get following unfollowers
+  following_unfollowers = []
+  for user in all_unfollowers:
+    if user in following:
+      following_unfollowers.append(user)
+
+  # show following unfollowers
+  print('Users you follow who unfollowed you:')
+  for user in following_unfollowers:
+    print(user)
+  print()
+
+  # get others
+  others = []
+  for user in all_unfollowers:
+    if user not in following_unfollowers:
+      others.append(user)
+
+  # show others
+  print('Users that changed their username, users that no longer have their account, '\
+    'users you do not follow who unfollowed you, or users you follow who unfollowed you '\
+    'and changed their username:')
+  for user in others:
+    print(user)
 
   # update followers.txt
   os.remove(filename)
