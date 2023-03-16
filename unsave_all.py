@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from time import sleep
 
 driver = None
@@ -8,19 +9,19 @@ def sign_in(username, password):
     driver = webdriver.Chrome()
     driver.get('https://instagram.com')
     sleep(2)
-    driver.find_element_by_name('username').send_keys(username)
-    driver.find_element_by_name('password').send_keys(password)
-    driver.find_element_by_xpath('//button[@type="submit"]').click()
-    sleep(2)
+    driver.find_element(By.NAME, 'username').send_keys(username)
+    driver.find_element(By.NAME, 'password').send_keys(password)
+    driver.find_element(By.XPATH, '//button[@type="submit"]').click()
+    sleep(10)
 
 def unsave_all(username):
     global driver
-    driver.get('https://instagram.com/{}/saved/'.format(username))
-    sleep(1)
-    href = driver.find_element_by_xpath("//div[@class='v1Nh3 kIKUG  _bz0w']/a").get_attribute('href')
+    driver.get('https://instagram.com/{}/saved/all-posts/'.format(username))
+    sleep(2)
+    href = driver.find_element(By.XPATH, "//div[@class='_aabd _aa8k _aanf']/a").get_attribute('href')
     driver.get(href)
-    sleep(1)
-    driver.find_element_by_xpath("//span[@class='wmtNn']/div/div/button").click()
+    sleep(2)
+    driver.find_element(By.XPATH, "//span[@class='_aamz']/div/div/button").click()
     unsave_all(username)
 
 def main():
